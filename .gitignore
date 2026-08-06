@@ -1,0 +1,37 @@
+# .gitignore
+
+# Python caches and compiled files
+
+**pycache**/ *.py\[cod\]* .pyo *.pyd* .so .pytest_cache/ .mypy_cache/ .ruff_cache/ .coverage htmlcov/
+
+# Virtual environments
+
+.venv/ venv/ env/ ENV/
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+# R and RStudio
+
+.Rhistory .RData .Ruserdata .Rproj.user/ \*.Rproj
+
+# Logs and experiment tracking
+
+*.log sbi-logs/* .tfevents.\*
+
+# Operating-system files
+
+.DS_Store Thumbs.db Desktop.ini
+
+# Editors and IDEs
+
+.vscode/ .idea/ *.swp* .swo
+
+# Temporary and backup files
+
+*.tmp* .temp *.bak* ~
+
+# Local configuration and secrets
+
+.env .env.\* !.env.example
