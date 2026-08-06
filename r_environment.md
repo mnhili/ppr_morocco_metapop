@@ -4,7 +4,7 @@ This project uses a separate R environment from the Python environment.
 
 ## R version
 
-- R 4.3.3
+- R 4.2.5
 
 ## Project packages used by the R code
 
@@ -42,8 +42,3 @@ This project uses a separate R environment from the Python environment.
 - forcats
 - igraph
 - knitr
-
-## Notes
-
-- The visible R installation in this workspace did not have these project packages installed, so this file is a clean requirements note rather than a lockfile.
-- If you want a fully reproducible R lockfile later, the next step is to create an `renv` project in the workspace and record the package versions from the intended R environment.
