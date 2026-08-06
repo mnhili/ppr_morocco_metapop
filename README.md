@@ -1,5 +1,3 @@
-# README
-
 # PPR Morocco Metapopulation Model
 
 This repository contains data-processing workflows, spatial analyses, and metapopulation modelling tools for studying peste des petits ruminants (PPR) in Morocco.
