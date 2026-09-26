@@ -13,6 +13,3 @@ This folder contains the population extraction work derived from GLW3.
 - The output is a supporting population input for the metapopulation model.
 - It sits upstream of the retained modeling workflow.
 
-## Notes
-
-- Keep this folder as the reference archive for the population extraction work.
