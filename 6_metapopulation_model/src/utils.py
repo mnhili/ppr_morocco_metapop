@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 def _strip_accents(s: str) -> str:
-    """Remove diacritical marks:  Fés-Meknès  ->  Fes-Meknes"""
+    """to remove diacritical marks:  Fés-Meknès  ->  Fes-Meknes"""
     return "".join(
         c for c in unicodedata.normalize("NFD", s)
         if unicodedata.category(c) != "Mn"
@@ -48,18 +48,7 @@ def load_contact_matrix(
     patch_names: np.ndarray,
     patch_regions: np.ndarray,
 ) -> np.ndarray:
-    """
-    Build an adjacency matrix from an edge-list CSV/Excel.
 
-    Expected columns (at least):
-        Commune_from, Region_from, Commune_to, Region_to
-
-    Parameters
-    ----------
-    Returns
-    -------
-    contact : ndarray of shape (n_patches, n_patches), dtype float64
-    """
     ext = filepath.suffix.lower()
     if ext in (".xlsx", ".xls"):
         edges = pd.read_excel(filepath)
@@ -68,8 +57,6 @@ def load_contact_matrix(
 
     n = len(patch_names)
 
-    # Build lookup: (stripped_commune, stripped_region) -> index
-    # This handles accent mismatches (e.g. Fés-Meknès vs Fes-Meknes)
     lookup: dict[tuple[str, str], int] = {}
     for idx in range(n):
         key = (_strip_accents(patch_names[idx]), _strip_accents(patch_regions[idx]))
@@ -121,11 +108,6 @@ def integerize_population(x: np.ndarray, seed: int | None = None) -> np.ndarray:
 # ---------------------------------------------------------------------------
 
 def load_data(data_dir: Path) -> dict:
-    """
-    Load the three Excel files and return a dict with keys:
-      communes_status, outbreaks, populations
-    No date filtering is applied.
-    """
     communes_status = pd.read_excel(data_dir / "regions_communes_status.xlsx")
     outbreaks = pd.read_excel(
         data_dir / "ppr_MA_2008_region_commune_agg.xlsx", sheet_name="Sheet1"
@@ -145,14 +127,7 @@ def prepare_study_data(
     population_col: str = "sr_2010",
     patches_mode: str = "all",
 ) -> dict:
-    """
-    From raw data build the study dataset.
 
-    patches_mode
-    ------------
-    "all"           : keep every commune from regions that had outbreaks (~1 453).
-    "infected_only" : keep only communes that recorded at least one outbreak (~127).
-    """
     f1 = data["communes_status"].drop_duplicates(subset=["REGION", "COMMUNE"])
     outbreaks = data["outbreaks"].copy()
     f3 = data["populations"].drop_duplicates(subset=["REGION", "COMMUNE"])
