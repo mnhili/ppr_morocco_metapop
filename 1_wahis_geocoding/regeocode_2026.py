@@ -16,8 +16,6 @@ geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1.1)
 print("Starting geocoding process. This may take a few minutes...")
 
 def get_location(row):
-    # Construct address parts
-    # Try specific to general
     parts = [
         str(row['Location']) if pd.notna(row['Location']) else '',
         str(row['COMMUNE']) if pd.notna(row['COMMUNE']) else '',
@@ -34,14 +32,14 @@ def get_location(row):
         if location:
             return location.latitude, location.longitude, "Exact"
         
-        # Fallback 1: Try without Location (specific village)
+        # Fallback 1: without Location (specific village)
         if len(parts) > 1:
             address_fallback_1 = ", ".join(parts[1:])
             location = geocode(address_fallback_1)
             if location:
                 return location.latitude, location.longitude, "Commune/Province Level"
         
-        # Fallback 2: Try just Commune + Province + Morocco
+        # Fallback 2: Commune + Province + Morocco
         commune = str(row['COMMUNE']) if pd.notna(row['COMMUNE']) else ''
         province = str(row['PROVINCE']) if pd.notna(row['PROVINCE']) else ''
         if commune and province:
@@ -73,15 +71,10 @@ for idx, row in df.iterrows():
 print("Geocoding finished.")
 print(df['Geocode_Status'].value_counts())
 
-# Fill/Overwrite original columns if found, or keep old?
-# User wants "new version", so maybe we replace them or offer new columns. 
-# I'll save new columns primarily, but maybe I should update the main Lat/Lon if user wants just that.
-# Let's update the main columns but keep backup in case.
-
 df['Old_Latitude'] = df['Latitude']
 df['Old_Longitude'] = df['Longitude']
 
-# Update where found
+# Updating where found
 mask = df['Geocode_Status'].isin(['Exact', 'Commune/Province Level', 'Commune Only'])
 df.loc[mask, 'Latitude'] = df.loc[mask, 'New_Latitude']
 df.loc[mask, 'Longitude'] = df.loc[mask, 'New_Longitude']
