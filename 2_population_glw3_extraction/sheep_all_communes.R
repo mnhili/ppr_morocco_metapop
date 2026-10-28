@@ -4,17 +4,37 @@ library(exactextractr)
 library(openxlsx)
 library(dplyr)
 
-setwd("C:/Users/manhi/OneDrive/Documents/Population_V2")
+script_path <- sub(
+  "^--file=", "",
+  commandArgs(trailingOnly = FALSE)[
+    grepl("^--file=", commandArgs(trailingOnly = FALSE))
+  ][1]
+)
+repo_root <- normalizePath(file.path(dirname(script_path), ".."), mustWork = TRUE)
+population_root <- file.path(repo_root, "2_population_glw3_extraction")
+output_file <- file.path(
+  population_root, "sheep_goat_populations_communes_GLW_v2.xlsx"
+)
 
 
 # Rasters
-sheep_raster_2015 <- rast("dataverse_files_Sh_2015/5_Sh_2015_Da.tif")
-sheep_raster_2010 <- rast("dataverse_files_Sh_2010/5_Sh_2010_Da.tif")
-goat_raster_2015  <- rast("dataverse_files_Gt_2015/5_Gt_2015_Da.tif")
-goat_raster_2010  <- rast("dataverse_files_Gt_2010/5_Gt_2010_Da.tif")
+sheep_raster_2015 <- rast(file.path(
+  population_root, "dataverse_files_Sh_2015", "5_Sh_2015_Da.tif"
+))
+sheep_raster_2010 <- rast(file.path(
+  population_root, "dataverse_files_Sh_2010", "5_Sh_2010_Da.tif"
+))
+goat_raster_2015 <- rast(file.path(
+  population_root, "dataverse_files_Gt_2015", "5_Gt_2015_Da.tif"
+))
+goat_raster_2010 <- rast(file.path(
+  population_root, "dataverse_files_Gt_2010", "5_Gt_2010_Da.tif"
+))
 
 # Shapefile
-morocco_shp <- st_read("GIS_data/New_SHP_Morocco.shp")
+morocco_shp <- st_read(file.path(
+  population_root, "GIS_data", "New_SHP_Morocco.shp"
+))
 
 # CRS harmonisation
 morocco_shp <- st_transform(morocco_shp, crs = st_crs(sheep_raster_2015))
@@ -52,8 +72,7 @@ results <- results %>%
 
 write.xlsx(
   results,
-  file = "sheep_goat_populations_communes_GLW_v2.xlsx",
+  file = output_file,
   rowNames = FALSE
 )
-
 
