@@ -21,7 +21,7 @@ def replot_tarp():
         print(f"Error: Could not find {results_file}")
         return
         
-    out_dir = root / "visualization"
+    out_dir = root / "outputs" / "tarp"
     out_dir.mkdir(parents=True, exist_ok=True)
     file_prefix = out_dir / "tarp_coverage"
 

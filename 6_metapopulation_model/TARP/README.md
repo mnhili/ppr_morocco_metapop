@@ -13,5 +13,4 @@ Replot saved TARP results:
 python 6_metapopulation_model/TARP/scripts/replot_tarp.py
 ```
 
-Results are saved in `6_metapopulation_model/outputs/tarp`. The figure is
-saved in `6_metapopulation_model/visualization`.
+TARP results and figures are saved in `6_metapopulation_model/outputs/tarp`.
