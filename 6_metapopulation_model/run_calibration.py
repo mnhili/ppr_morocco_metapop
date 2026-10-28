@@ -25,7 +25,7 @@ from src.sbi_pipeline import (
     make_simulator,
     build_prior,
     param_names,
-    run_snpe,
+    run_tsnpe,
     unpack_theta,
     N_GROUPS,
 )
@@ -142,8 +142,8 @@ def main():
     )
     print(f"SS2 dimension: {len(x_obs)}")
 
-    # ---- SNPE ---------------------------------------------------------------
-    posterior, (theta_all, x_all), elapsed = run_snpe(
+    # ---- TSNPE --------------------------------------------------------------
+    posterior, (theta_all, x_all), elapsed = run_tsnpe(
         simulator_fn, prior, x_obs,
         rounds=args.rounds, num_workers=args.workers,
     )

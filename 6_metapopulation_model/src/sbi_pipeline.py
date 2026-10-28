@@ -168,7 +168,7 @@ def unpack_theta(theta_1d) -> dict:
 
 
 # ---------------------------------------------------------------------------
-def run_snpe(
+def run_tsnpe(
     simulator_fn,
     prior,
     x_obs: torch.Tensor,
