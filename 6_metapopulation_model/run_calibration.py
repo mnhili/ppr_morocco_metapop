@@ -5,8 +5,7 @@ PPR metapopulation calibration – single-scenario entry point.
 Usage
 -----
     python run_calibration.py                         # defaults
-    python run_calibration.py --workers 8 --rounds 1000 500 500
-    python run_calibration.py --samples 5000 --skip-posterior-sims
+    python run_calibration.py --workers 12 --rounds 2000 1000 500
 """
 
 import argparse
@@ -54,7 +53,7 @@ FLOW = "nsf"
 def parse_args():
     p = argparse.ArgumentParser(description="PPR SBI calibration (single scenario)")
     p.add_argument("--workers", type=int, default=4)
-    p.add_argument("--rounds", type=int, nargs="+", default=[1000, 500, 500])
+    p.add_argument("--rounds", type=int, nargs="+", default=[2000, 1000, 500])
     p.add_argument("--sampler", type=str, default="mcmc",
                    help="Sampler name (keeps for metadata; calibration uses TSNPE)")
     return p.parse_args()
@@ -290,7 +289,6 @@ def main():
         pickle.dump(meta, f)
 
     print(f"\nDone. Results in {RESULTS_DIR.relative_to(ROOT)}/")
-    print("Run  quarto render analysis.qmd  for visualisations.")
 
 
 if __name__ == "__main__":

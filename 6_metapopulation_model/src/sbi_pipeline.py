@@ -168,14 +168,6 @@ def unpack_theta(theta_1d) -> dict:
 
 
 # ---------------------------------------------------------------------------
-  """
-    Truncated Sequential NPE (TSNPE).
-
-    It Uses ``RestrictedPrior`` + ``get_density_thresholder`` from sbi
-    (canonical implementation).  Intermediate posteriors are built with
-    MCMC so that ``get_density_thresholder`` can draw samples reliably.
-    All rounds use ``force_first_round_loss=True``.
-    """
 def run_snpe(
     simulator_fn,
     prior,
@@ -185,6 +177,14 @@ def run_snpe(
     tsnpe_quantile: float = 1e-4,
     **_kwargs,
 ) -> tuple:
+    """
+    Run truncated sequential NPE (TSNPE).
+
+    It uses ``RestrictedPrior`` + ``get_density_thresholder`` from sbi.
+    Intermediate posteriors are built with MCMC so that
+    ``get_density_thresholder`` can draw samples reliably.
+    All rounds use ``force_first_round_loss=True``.
+    """
   
     if rounds is None:
         rounds = [2000, 1000, 500]
