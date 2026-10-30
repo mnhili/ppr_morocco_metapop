@@ -1,0 +1,28 @@
+* text=auto
+
+*.py text diff=python
+*.R text
+*.Rmd text
+*.qmd text
+*.ipynb text
+*.csv text
+*.html text
+*.md text
+*.txt text
+
+*.xlsx binary
+*.shp binary
+*.shx binary
+*.dbf binary
+*.prj binary
+*.cpg binary
+*.tif binary
+*.tiff binary
+*.pkl binary
+*.pt binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.eps binary
